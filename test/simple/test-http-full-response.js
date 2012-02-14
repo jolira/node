@@ -47,8 +47,10 @@ var runs = 0;
 
 function runAb(opts, callback) {
   var command = 'ab ' + opts + ' http://127.0.0.1:' + common.PORT + '/';
+  console.error(command);
   exec(command, function(err, stdout, stderr) {
     if (err) {
+      console.error(err.stack || err);
       if (stderr.indexOf('ab') >= 0) {
         console.log('ab not installed? skipping test.\n' + stderr);
         process.reallyExit(0);
@@ -76,6 +78,7 @@ function runAb(opts, callback) {
 }
 
 server.listen(common.PORT, function() {
+  return;
   runAb('-c 1 -n 10', function() {
     console.log('-c 1 -n 10 okay');
 
